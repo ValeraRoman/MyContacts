@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32986BC225E3BA640002A448 /* LoginScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32986BC125E3BA640002A448 /* LoginScreenViewController.swift */; };
 		32DF9B2C25D6BBAB00961B3C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DF9B2B25D6BBAB00961B3C /* UIColor+Extension.swift */; };
 		32E0FBF625D31FA200287786 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E0FBF525D31FA200287786 /* AppDelegate.swift */; };
 		32E0FBF825D31FA200287786 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E0FBF725D31FA200287786 /* SceneDelegate.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		32986BC125E3BA640002A448 /* LoginScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
 		32DF9B2B25D6BBAB00961B3C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		32E0FBF225D31FA200287786 /* MyContacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyContacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E0FBF525D31FA200287786 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +45,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32986BC025E3BA460002A448 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				32E0FBF525D31FA200287786 /* AppDelegate.swift */,
+				32E0FBFE25D31FAC00287786 /* Assets.xcassets */,
+				32E0FBF725D31FA200287786 /* SceneDelegate.swift */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		32986BC525E3BAB60002A448 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				32DF9B2B25D6BBAB00961B3C /* UIColor+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		32E0FBE925D31FA200287786 = {
 			isa = PBXGroup;
 			children = (
@@ -62,15 +82,13 @@
 		32E0FBF425D31FA200287786 /* MyContacts */ = {
 			isa = PBXGroup;
 			children = (
+				32986BC525E3BAB60002A448 /* Extension */,
 				32E0FC1625D44FF000287786 /* Model */,
 				32E0FC1725D44FFD00287786 /* View */,
 				32E0FC1825D4500400287786 /* Contoller */,
-				32E0FBF525D31FA200287786 /* AppDelegate.swift */,
-				32E0FBF725D31FA200287786 /* SceneDelegate.swift */,
-				32E0FBFE25D31FAC00287786 /* Assets.xcassets */,
+				32986BC025E3BA460002A448 /* Resource */,
 				32E0FC0025D31FAC00287786 /* LaunchScreen.storyboard */,
 				32E0FC0325D31FAC00287786 /* Info.plist */,
-				32DF9B2B25D6BBAB00961B3C /* UIColor+Extension.swift */,
 			);
 			path = MyContacts;
 			sourceTree = "<group>";
@@ -96,6 +114,7 @@
 			children = (
 				32E0FC0D25D40D9F00287786 /* ContactsTableViewController.swift */,
 				32E0FC1D25D6911F00287786 /* CompaniesTableViewController.swift */,
+				32986BC125E3BA640002A448 /* LoginScreenViewController.swift */,
 			);
 			path = Contoller;
 			sourceTree = "<group>";
@@ -171,6 +190,7 @@
 			files = (
 				32DF9B2C25D6BBAB00961B3C /* UIColor+Extension.swift in Sources */,
 				32E0FBF625D31FA200287786 /* AppDelegate.swift in Sources */,
+				32986BC225E3BA640002A448 /* LoginScreenViewController.swift in Sources */,
 				32E0FBF825D31FA200287786 /* SceneDelegate.swift in Sources */,
 				32E0FC1425D44A1000287786 /* ContactsTableViewCell.swift in Sources */,
 				32E0FC1125D42C7700287786 /* Names.swift in Sources */,
