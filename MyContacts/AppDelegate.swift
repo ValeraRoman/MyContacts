@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        setupTabBarAppearance()
+        setupNavigationAppearance()
         return true
     }
 
@@ -32,5 +33,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate {
+    
+    func setupTabBarAppearance(){
+        UITabBar.appearance().barTintColor = .cyan
+        UITabBar.appearance().unselectedItemTintColor = .blue
+        
+    }
+    
+    func setupNavigationAppearance() {
+        UINavigationBar.appearance().tintColor = .appLightBlue
+    }
 }
 

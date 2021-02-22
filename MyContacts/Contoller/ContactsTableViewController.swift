@@ -6,26 +6,26 @@
 //
 
 import UIKit
+import Contacts
 
 class ContactsTableViewController: UITableViewController {
     
     //MARK: - Property
     
     let identifier = "cell"
-    var name = [
-        Names(isExpandable: true, names: [Contact(name: "Robert", number: "+3809923432", isFavorite: false), Contact(name: "Sandra", number: "+3809923432", isFavorite: false),Contact(name: "Oleg", number: "+3809923432", isFavorite: false), Contact(name: "Yura", number: "+3809923432", isFavorite: false), Contact(name: "Sara", number: "+3809923432", isFavorite: false)]),
-        Names(isExpandable: true, names: [Contact(name: "Anna", number: "+3809923432", isFavorite: false), Contact(name: "Maria", number: "+3809923432", isFavorite: false),Contact(name: "Oleg", number: "+3809923432", isFavorite: false), Contact(name: "Ivan", number: "+3809923432", isFavorite: false), Contact(name: "Grab", number: "+3809923432", isFavorite: false)]),
-        Names(isExpandable: true, names: [Contact(name: "Taras", number: "+3809923432", isFavorite: false), Contact(name: "Jack", number: "+3809923432", isFavorite: false),Contact(name: "Oleg", number: "+3809923432", isFavorite: false), Contact(name: "Hitler", number: "+3809923432", isFavorite: false), Contact(name: "Gringo", number: "+3809923432", isFavorite: false)]),
-    ]
+    var name = [Names]()
     
-    var showIndexPath = false
+    var isShowNumber = false
     
     //MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getContact()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Show number", style: .plain, target: self, action: #selector(showNumber))
         navigationItem.title = "Contacts"
+        navigationItem.backButtonTitle = ""
+        
         tableView.register(ContactsTableViewCell.self, forCellReuseIdentifier: identifier)
     }
     
@@ -42,6 +42,33 @@ class ContactsTableViewController: UITableViewController {
         print(favoriteName)
     }
     
+    func getContact(){
+        let contactsStore = CNContactStore()
+        
+        contactsStore.requestAccess(for: .contacts) { (granted, error) in
+            if let error = error {
+                print("Error request ", error )
+                return
+            }
+            if granted {
+                let key = [CNContactGivenNameKey, CNContactPhoneNumbersKey]
+                let request = CNContactFetchRequest(keysToFetch: key as [CNKeyDescriptor])
+                var contactForAppend = [Contact]()
+                do {
+                    try contactsStore.enumerateContacts(with: request, usingBlock: { (contact, finishPointer) in
+                        contactForAppend.append(Contact(contact: contact, isFavorite: false))
+                    })
+                } catch let error  {
+                    print("Failed to enumerate contacts", error )
+                }
+                
+                let namesArray = Names(isExpandable: true, names: contactForAppend)
+                self.name = [namesArray]
+              
+            }
+        }
+        
+    }
     //MARK: Objc function
     
     @objc func showNumber(){
@@ -56,8 +83,8 @@ class ContactsTableViewController: UITableViewController {
             }
         }
         
-        showIndexPath = !showIndexPath
-        let animationStyle = showIndexPath ? UITableView.RowAnimation.right : .left
+        isShowNumber = !isShowNumber
+        let animationStyle = isShowNumber ? UITableView.RowAnimation.right : .left
         self.tableView.reloadRows(at: indexPathForReload, with: animationStyle)
     }
     
@@ -93,22 +120,24 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ContactsTableViewCell
+        let cell = ContactsTableViewCell(style: .subtitle, reuseIdentifier: identifier)
+    
         cell.selectionStyle = .none
         cell.link = self
         let result = name[indexPath.section].names[indexPath.row]
-        cell.textLabel?.text = result.name
-
-        if showIndexPath {
-            cell.textLabel?.text = "\(result.name) -    \(result.number)"
-
+        cell.textLabel?.text = result.contact.givenName
+        cell.detailTextLabel?.text = "" 
+        if isShowNumber {
+            cell.imageView?.image = UIImage(named: "phone")
+            cell.detailTextLabel?.text = result.contact.phoneNumbers.first?.value.stringValue
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let closeButton = UIButton()
-        closeButton.backgroundColor = .green
+        closeButton.layer.cornerRadius = 20
+        closeButton.backgroundColor = .appLightBlue
         closeButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         closeButton.setTitle("Close", for: .normal)
         closeButton.tag = section
@@ -118,6 +147,18 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return 20
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isShowNumber {
+            
+        }
+        guard let number = name[indexPath.section].names[indexPath.row].contact.phoneNumbers.first?.value.stringValue else {return}
+        guard let numberURL = URL(string: "tel://" + number) else {return}
+        UIApplication.shared.open(numberURL)
     }
     
 }

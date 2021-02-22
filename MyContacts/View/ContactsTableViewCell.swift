@@ -13,15 +13,16 @@ class ContactsTableViewCell: UITableViewCell {
     
     var link: ContactsTableViewController?
     
-    let favoriteButton = UIButton(type: .custom)
+    var favoriteButton = UIButton(type: .custom)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        accessoryView = favoriteButton
         favoriteButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         favoriteButton.tintColor = .none
         favoriteButton.setImage(UIImage(named: "star"), for: .normal)
-        accessoryView = favoriteButton
         favoriteButton.addTarget(self, action: #selector(selectedFavoriteButton(sender:)), for: .touchUpInside)
+
 
     }
     
